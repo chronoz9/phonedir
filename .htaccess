@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+DirectoryIndex index.html index.htm default.htm index.php index.php3 index.phtm$
+RewriteEngine On
+RewriteBase /phndir/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond $1 !^(index\.php|public|images|robots\.txt|css)
+RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>
