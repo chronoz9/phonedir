@@ -15,12 +15,23 @@ class Phonedir extends MY_Controller
         $limit = 10;
         $offset = 0;
         $param = $this->input->get();
-        if(isset($param['limit']))
+        if(isset($param['limit']) && $param['limit']>0)
             $limit = $param['limit'];
         if(isset($param['skip']))
             $offset = $param['skip'];
+        $numrows = $this->getTotalRow();
         $rows = $this->dbGetPhone($limit,$offset);
+        $nextlink = '#';
+        $prevlink = '#';
+        $nextskip = (($offset/$limit)+1)*$limit;
+        $prevskip = (($offset/$limit)-1)*$limit;
+        if($nextskip < $numrows)
+            $nextlink = base_url().'phonedir?skip='.$nextskip.'&limit='.$limit;
+        if($prevskip >=0)
+            $prevlink = base_url().'phonedir?skip='.$prevskip.'&limit='.$limit;
         $data['rows'] = $rows;
+        $data['prevlink'] = $prevlink;
+        $data['nextlink'] = $nextlink;
         $this->load->view('dir.php',$data);
     }
     function form()
@@ -60,13 +71,19 @@ class Phonedir extends MY_Controller
     protected function dbPostPhone($input)
     {
         $this->load->model('phone_model','phdb');
-        $res = $this->phdb->insert_phone($input);
+        $res = $this->phdb->insertPhone($input);
         return $res;
     }
     protected function dbGetPhone($limit,$offset)
     {
         $this->load->model('phone_model','phdb');
-        $res = $this->phdb->get_phone($offset,$limit);
+        $res = $this->phdb->getPhone($offset,$limit);
+        return $res;
+    }
+    protected function getTotalRow()
+    {
+        $this->load->model('phone_model','phdb');
+        $res = $this->phdb->getTotalRow();
         return $res;
     }
 }

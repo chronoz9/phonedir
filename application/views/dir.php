@@ -19,6 +19,12 @@
             <tr><td colspan="3">No record found.</td> </tr>
         <?php endif ?>
     </tbody>
+    <tfoot>
+        <tr><td colspan="3" align="right"><a href="<?php echo $prevlink ?>">Previous Page</a> <a href="<?php echo $nextlink ?>">Next Page</a></td></tr>
+     
+        
+        
+    </tfoot>
     </table>
     
 </div>

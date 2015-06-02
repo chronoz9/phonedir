@@ -2,7 +2,7 @@
 
 class Phone_model extends CI_Model
 {
-    function insert_phone($input)
+    function insertPhone($input)
     {
         $data = array(
             'name'      =>$input['uname'],
@@ -12,7 +12,7 @@ class Phone_model extends CI_Model
         $this->db->insert('phonedir',$data);
         return $this->db->insert_id();
     }
-    function get_phone($limit,$offset)
+    function getPhone($limit,$offset)
     {
         $query = $this->db->get('phonedir',$offset,$limit);
         $rows = $query->result();
@@ -25,6 +25,12 @@ class Phone_model extends CI_Model
             $row->phone = "(".$arcode.") ".$firstmain.'-'.$secondmain;
         }
         return $rows;
+    }
+    function getTotalRow()
+    {
+        $query = $this->db->get('phonedir');
+        $numrow = $query->num_rows();
+        return $numrow;
     }
 }
 ?>
