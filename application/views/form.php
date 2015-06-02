@@ -2,6 +2,7 @@
 <?php echo validation_errors(); ?>
 
 <?php echo form_open(base_url().'phonedir/postform',array('id'=>'phoneform')) ?>
+<div>* = mandatory</div>
 <div>
     <label>Name*</label>
     <input type="text" name="uname" value="<?php echo set_value('uname'); ?>">

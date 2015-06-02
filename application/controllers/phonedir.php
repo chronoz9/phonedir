@@ -15,10 +15,10 @@ class Phonedir extends MY_Controller
         $limit = 10;
         $offset = 0;
         $param = $this->input->get();
-        if(isset($param['show']))
-            $limit = $param['show'];
-        if(isset($param['from']))
-            $offset = $param['from'];
+        if(isset($param['limit']))
+            $limit = $param['limit'];
+        if(isset($param['skip']))
+            $offset = $param['skip'];
         $rows = $this->dbGetPhone($limit,$offset);
         $data['rows'] = $rows;
         $this->load->view('dir.php',$data);
