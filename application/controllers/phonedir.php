@@ -52,6 +52,46 @@ class Phonedir extends MY_Controller
             }
         }
     }
+    function api()
+    {
+        $errcode = '';
+        $errmsg = '';
+        $res = array();
+        $gets = $this->input->get();
+        if(!isset($gets['skip']) || !isset($gets['limit']))
+        {
+            $errcode = '1';
+            $errmsg = 'Missing parameter. parameter required: skip=[int offset]&limit=[int limit]';
+        }
+        else if(!is_numeric(($gets['skip'])) || !is_numeric($gets['limit']))
+        {
+            $errcode = '2';
+            $errmsg = 'Invalid data type for parameter. Both parameter only accept integer';
+        }
+        else
+        {
+            $skip = $gets['skip'];
+            $limit = $gets['limit'];
+            $res = $this->dbGetPhone($limit,$skip);
+            if($res == NULL)
+            {
+                $errcode = '3';
+                $errmsg = 'No result available';
+            }
+            else
+            {
+                $errcode = '0';
+                $errmsg = '';
+            }
+        }
+
+        $resp = array(
+                'err_code' => $errcode,
+                'err_msg' => $errmsg,
+                'result' => $res
+            );
+        echo json_encode($resp);
+    }
     protected function checkForm()
     {
         $config = array(
